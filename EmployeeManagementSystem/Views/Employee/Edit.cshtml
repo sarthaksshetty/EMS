@@ -1,0 +1,52 @@
+﻿@model EmployeeManagementSystem.Models.Employee
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit Employee</h2>
+<form ng-app="employeeApp" ng-controller="EmployeeController" ng-submit="editEmployee()">
+    <div>
+        <label>Name</label>
+        <input type="text" ng-model="employee.Name" required />
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="email" ng-model="employee.Email" required />
+    </div>
+    <div>
+        <label>Phone</label>
+        <input type="tel" ng-model="employee.Phone" required />
+    </div>
+    <div>
+        <label>Department</label>
+        <select ng-model="employee.DepartmentId" ng-options="department.Id as department.Name for department in departments"></select>
+    </div>
+    <div>
+        <button type="submit">Save</button>
+        <a href="/Employee/Index">Cancel</a>
+    </div>
+</form>
+@section Scripts {
+    <script>
+    angular.module('employeeApp', [])
+        .controller('EmployeeController', function($scope, $http) {
+            var url = window.location.href;
+            var id = url.substring(url.lastIndexOf('/') + 1);
+            $scope.employee = {};
+            $http.get('/Employee/GetEmployee/' + id).then(function (response) {
+                $scope.employee = response.data;
+            });
+
+            $http.get('/Department/GetAllDepartments').then(function (response) {
+                $scope.departments = response.data;
+            });
+
+            $scope.editEmployee = function () {
+                $http.put('/Employee/Edit/' + id, $scope.employee).then(function (response) {
+                    window.location.href = '/Employee/Index';
+                });
+            };
+        });
+    </script>
+    

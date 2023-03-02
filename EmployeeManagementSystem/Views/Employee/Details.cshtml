@@ -1,0 +1,28 @@
+﻿@model EmployeeManagementSystem.Models.Employee
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Employee Details</h2>
+<div>
+    <label>Name:</label>
+    <span>@Model.Name</span>
+</div>
+<div>
+    <label>Email:</label>
+    <span>@Model.Email</span>
+</div>
+<div>
+    <label>Phone:</label>
+    <span>@Model.Phone</span>
+</div>
+<div>
+    <label>Department:</label>
+    <span>@Model.Department.Name</span>
+</div>
+<p>
+    <a href="/Employee/Index">Back to List</a>
+    <a href="/Employee/Edit/@Model.Id">Edit</a>
+    <a href="/Employee/Delete/@Model.Id">Delete</a>
+</p>
